@@ -31,6 +31,14 @@ def inital_db():
     
 
 @app.route("/")
-def home_message():
-    return "<h1>Welcome to Deliverly</h1>"
+def render_table():
+    with open("data.csv", "r") as file:
+        data = csv.reader(file)
+        header = next(data)
+        rest = list(data)
+        print(rest)
 
+    return render_template("index.html", columns=header, data=rest)
+
+if __name__ == "__main__":
+    app.run(debug=True)

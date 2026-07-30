@@ -1,4 +1,4 @@
-﻿OrderID,CustomerName,CustomerEmail,CustomerAddress,Suburb,PostCode,CustomerPhone,RestaurantName,RestaurantAddress,RestaurantPhone,DishName,DishPrice,OrderDate,Quantity,TotalAmount
+OrderID,CustomerName,CustomerEmail,CustomerAddress,Suburb,PostCode,CustomerPhone,RestaurantName,RestaurantAddress,RestaurantPhone,DishName,DishPrice,OrderDate,Quantity,TotalAmount
 75,Alice Johnson,alice@hotmail.com,14 Barrack Street,Perth,6000,(08) 93012730,Burger Barn,456 Burger Ave,(08) 93342056,Fries,3,13/03/2024,2,6
 216,Alice Johnson,alice@hotmail.com,14 Barrack Street,Perth,6000,(08) 93012730,Burger Barn,456 Burger Ave,(08) 93342056,Pepperoni Pizza,9,30/07/2024,2,18
 225,Alice Johnson,alice@hotmail.com,14 Barrack Street,Perth,6000,(08) 93012730,Burger Barn,456 Burger Ave,(08) 93342056,Fish and Chips,11,8/08/2024,1,11

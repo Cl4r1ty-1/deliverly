@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 cx = sqlite3.connect("records.db")
 cu = cx.cursor()
+cu.execute("PRAGMA foreign_keys = ON")
 
 def inital_db():
     #clear all db records
@@ -27,7 +28,31 @@ def inital_db():
             PostCode INTEGER NOT NULL,
             CustomerPhone TEXT NOT NULL
         )
-""")
+        """)
+    cu.execute("""
+        CREATE TABLE Restaurant(
+            RestaurantID INTEGER PRIMARY KEY,
+            RestaurantName TEXT NOT NULL,
+            RestaurantAddress TEXT NOT NULL,
+            RestaurantPhone TEXT NOT NULL,
+        )
+        """)
+    cu.execute("""
+        CREATE TABLE Dish(
+            DishID INTEGER PRIMARY KEY,
+            RestaurantID INTEGER NOT NULL,
+            DishName TEXT NOT NULL,
+            DishPrice REAL NOT NULL CHECK(DishPrice > 0),
+            FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+            )
+            """)
+    cu.execute("""
+        CREATE TABLE Orders(
+            OrderID INTEGER PRIMARY KEY,
+            CustomerID INTEGER NOT NULL,
+            RestaurantID INTEGER NOT NULL,
+            OrderDate TEXT NOT NULL CHECK()
+               """)
     
 
 @app.route("/")

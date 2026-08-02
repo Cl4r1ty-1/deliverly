@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Deliverly</title>
+    <title>Deliverly - Home</title>
 </head>
 <body>
-    <h1>Deliverly database viewer</h1>
+    <h1>Deliverly</h1>
 
-    <table cellspacing="0" width="100%">
+    <table style="margin: 0px auto;">
         <thead>
             <tr>
-            {% for c in columns %}
-                <th scope="col">{{c}}</th>
-            {% endfor %}
+                <th scope="col">Create blank database</th>
+                <th scope="col">Insert production data</th>
             </tr>
         </thead>
         <tbody>
-            {% for row in data %}
             <tr>
-                {% for col in row %}
-                <td>{{col}}</td>
-                {% endfor %}
+                <td align="center">
+                    <form action="/blank" method="GET">
+                        <button type="button">Action</button>
+                    </form>
+                </td>
+                <td align="center">
+                    <form action="/prod_data" method="GET">
+                        <button type="button">Action</button>
+                    </form>
+                </td>
             </tr>
-            {% endfor %}
-        </tbody>
     </table>
 </body>
 </html>

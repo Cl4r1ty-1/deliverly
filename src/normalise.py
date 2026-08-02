@@ -1,5 +1,4 @@
 import pandas as pd
-from pathlib import Path
 from app import BASE_DIR
 
 def normalise_csv():
@@ -35,14 +34,16 @@ def normalise_csv():
     norm_dish_df = dish_df.merge(restaurant_df, on=["RestaurantName", "RestaurantAddress", "RestaurantPhone"])
     final_dish_df = norm_dish_df[["DishID", "RestaurantID", "DishName", "DishPrice"]]
 
+    #merge all + orders
     norm_orders = df.merge(customer_df, on=["FirstName", "LastName", "CustomerEmail", "CustomerAddress", "Suburb", "PostCode", "CustomerPhone"])
     norm_orders = norm_orders.merge(restaurant_df, on=["RestaurantName", "RestaurantAddress", "RestaurantPhone"])
     norm_orders = norm_orders.merge(final_dish_df, on=["RestaurantID", "DishName", "DishPrice"]) # dish is dependant on which restaurant it comes from
-    
+
+    # remove all unnecessary fields
     norm_orders = norm_orders[["OrderID", "CustomerID", "RestaurantID", "OrderDate", "DishID", "Quantity"]]
     final_orders = norm_orders[["OrderID", "CustomerID", "RestaurantID", "OrderDate"]]
 
-    #assosiative entity for orders/items
+    # create assosiative entity for orders/items
     order_items = norm_orders[["OrderID", "DishID", "Quantity"]]
 
     # output csv files and their corresponding dataframes

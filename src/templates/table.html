@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Deliverly - Table Viewer</title>
+</head>
+<body>
+    <h1>Deliverly database viewer</h1>
+
+    <table cellspacing="0" width="100%">
+        <thead>
+            <tr>
+            {% for c in columns %}
+                <th scope="col">{{c}}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for col in row %}
+                <td>{{col}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

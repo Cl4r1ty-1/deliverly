@@ -66,28 +66,53 @@ def create_tables():
         CREATE TABLE OrdersItems(
             OrderID INTEGER NOT NULL,
             DishID INTEGER NOT NULL,
-            Quantity INTEGER NOT NULL,
+            Quantity INTEGER NOT NULL CHECK(Quantity > 0),
             PRIMARY KEY (OrderID, DishID),
             FOREIGN KEY OrderID REFERENCES Orders(OrderID),
             FOREIGN KEY DishID REFERENCES Dish(DishID)
         )
         """)
+    cx.commit()
 
 def insert_sample_data():
     pass
 
 def insert_real_data():
-    pass
+    with open(BASE_DIR / "data" / "customer.csv", 'r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            cu.execute("INSERT INTO Customer (CustomerID, FirstName, LastName, CustomerEmail, CustomerAddress, Suburb, PostCode, CustomerPhone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", row)
+
+    with open(BASE_DIR / "data" / "restaurant.csv", 'r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            cu.execute("INSERT INTO Restaurant (RestaurantID, RestaurantName, RestaurantAddress, RestaurantPhone) VAULES (?, ?, ?, ?)", row)
+
+    with open(BASE_DIR / "data" / "dish.csv", 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cu.execute("INSERT INTO Dish (DishID, RestaurantID, DishName, DishPrice) VAULES (?, ?, ?, ?)", row)
+
+    with open(BASE_DIR / "data" / "orders.csv", 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cu.execute("INSERT INTO Orders (OrderID, CustomerID, RestaurantID, OrderDate) VAULES (?, ?, ?, ?)", row)
+
+    with open(BASE_DIR / "data" / "ordersitems.csv", 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cu.execute("INSERT INTO OrdersItems (OrderID, DishID, Quantity) VAULES (?, ?, ?)", row)
+    cx.commit()
 
 @app.route("/")
-def render_table():
-    with open("data.csv", "r") as file:
-        data = csv.reader(file)
-        header = next(data)
-        rest = list(data)
-        print(rest)
+def home():
+    return render_template("index.html")
 
-    return render_template("index.html", columns=header, data=rest)
 
 if __name__ == "__main__":
     app.run(debug=True)

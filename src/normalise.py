@@ -3,7 +3,7 @@ from app import BASE_DIR
 
 def normalise_csv():
     # read unnormalised data
-    df = pd.read_csv(f"{BASE_DIR}/../data.csv", dtype=str)
+    df = pd.read_csv(BASE_DIR.parent / "data.csv", dtype=str)
 
     # handle 1nf
     split = df.pop("CustomerName").str.split(' ', expand=True)
@@ -15,7 +15,7 @@ def normalise_csv():
     customer_df = df[["FirstName", "LastName", "CustomerEmail", "CustomerAddress", "Suburb", "PostCode", "CustomerPhone"]].drop_duplicates().reset_index(drop=True)
     customer_df.index.name = "CustomerID"
     customer_df.reset_index(inplace=True)
-    customer_df.CustomerID += 1
+    customer_df.CustomerID += 1 # id starts at 1 rather than 0
 
     #extract dish
     dish_df = df[["RestaurantName", "RestaurantAddress", "RestaurantPhone", "DishName", "DishPrice"]].drop_duplicates().reset_index(drop=True)
@@ -57,7 +57,7 @@ def normalise_csv():
 
     # export final dataframes to csv files
     for tup in csv_names:
-        tup[1].to_csv(f"{BASE_DIR}/data/{tup[0]}", index=False, encoding='utf-8')
+        tup[1].to_csv(BASE_DIR / "data" / tup[0], index=False, encoding='utf-8')
 
 if __name__ == "__main__":
     normalise_csv()

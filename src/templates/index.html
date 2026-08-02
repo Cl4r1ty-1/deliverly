@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {{ JSGlue.include() }}
     <title>Deliverly - Home</title>
 </head>
 <body>
@@ -19,16 +20,21 @@
         <tbody>
             <tr>
                 <td align="center">
-                    <form action="/blank" method="GET">
-                        <button type="button">Action</button>
-                    </form>
+                    <button id="create_empty_tables">Action</button>
                 </td>
                 <td align="center">
-                    <form action="/prod_data" method="GET">
-                        <button type="button">Action</button>
-                    </form>
+                    <button id="insert_prod_data">Action</button>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <p id="init_status">Status: Press Action</p>
+                </td>
+                <td align="center">
+                    <p id="p_data_status">Status: Press Action</p>
                 </td>
             </tr>
     </table>
+    <script src="{{ url_for('static', filename='js/db_admin.js') }}"></script>
 </body>
 </html>

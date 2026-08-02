@@ -1,5 +1,6 @@
 import sqlite3
 import csv
+import traceback
 from flask import Flask, render_template, jsonify, request
 from flask_jsglue import JSGlue
 from pathlib import Path
@@ -16,11 +17,11 @@ cu.execute("PRAGMA foreign_keys = ON")
 
 def create_tables():
     #clear all db records
-    cu.execute("DROP TABLE IF EXISTS Customer")
-    cu.execute("DROP TABLE IF EXISTS Restaurant")
-    cu.execute("DROP TABLE IF EXISTS Dish")
     cu.execute("DROP TABLE IF EXISTS Orders")
     cu.execute("DROP TABLE IF EXISTS OrdersItems")
+    cu.execute("DROP TABLE IF EXISTS Dish")
+    cu.execute("DROP TABLE IF EXISTS Restaurant")
+    cu.execute("DROP TABLE IF EXISTS Customer")
 
     #create new tables
     cu.execute("""
@@ -49,7 +50,7 @@ def create_tables():
             RestaurantID INTEGER NOT NULL,
             DishName TEXT NOT NULL,
             DishPrice REAL NOT NULL CHECK(DishPrice > 0),
-            FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+            FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID) ON DELETE CASCADE
         )
         """)
     cu.execute("""
@@ -58,7 +59,7 @@ def create_tables():
             CustomerID INTEGER NOT NULL,
             RestaurantID INTEGER NOT NULL,
             OrderDate DATE NOT NULL,
-            FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+            FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID) ON DELETE CASCADE,
             FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
         )
         """)
@@ -71,7 +72,7 @@ def create_tables():
             DishID INTEGER NOT NULL,
             Quantity INTEGER NOT NULL CHECK(Quantity > 0),
             PRIMARY KEY (OrderID, DishID),
-            FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+            FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
             FOREIGN KEY (DishID) REFERENCES Dish(DishID)
         )
         """)
@@ -124,7 +125,7 @@ def blank():
         print("Tables created!")
         return jsonify({"status": "success", "message":"Empty tables created successfully!"})
      except Exception as e:
-          print(e)
+          print(traceback.format_exc())
           return jsonify({"status": "fail", "message":str(e)})
 
 @app.route('/prod_data', methods=['POST'])
@@ -138,6 +139,13 @@ def prod_data():
           print(e)
           return jsonify({"status": "fail", "message":str(e)})
 
+@app.route('/tables')
+def tables():
+    cu.execute("SELECT * FROM Customer")
+    data = cu.fetchall()
+    headers = [description[0] for description in cu.description]
+
+    return render_template('table.html', columns=headers, data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)

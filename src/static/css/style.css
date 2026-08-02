@@ -9,3 +9,8 @@ table, th, td {
 h1 {
     text-align: center;
 }
+
+.link {
+    text-align: center;
+    padding-top: 10px;
+}

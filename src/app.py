@@ -1,15 +1,17 @@
 import sqlite3
 import csv
 from flask import Flask, render_template
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
 
 app = Flask(__name__)
 
-cx = sqlite3.connect("records.db")
+cx = sqlite3.connect(BASE_DIR / "records.db")
 cu = cx.cursor()
 cu.execute("PRAGMA foreign_keys = ON")
 
-def inital_db():
+def create_tables():
     #clear all db records
     cu.execute("DROP TABLE IF EXISTS Customer")
     cu.execute("DROP TABLE IF EXISTS Restaurant")
@@ -21,7 +23,8 @@ def inital_db():
     cu.execute("""
         CREATE TABLE Customer(
             CustomerID INTEGER PRIMARY KEY,
-            CustomerName TEXT NOT NULL,
+            FirstName TEXT NOT NULL,
+            LastName TEXT NOT NULL,
             CustomerEmail TEXT NOT NULL,
             CustomerAddress TEXT NOT NULL,
             Suburb TEXT NOT NULL,
@@ -44,16 +47,37 @@ def inital_db():
             DishName TEXT NOT NULL,
             DishPrice REAL NOT NULL CHECK(DishPrice > 0),
             FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
-            )
-            """)
+        )
+        """)
     cu.execute("""
         CREATE TABLE Orders(
             OrderID INTEGER PRIMARY KEY,
             CustomerID INTEGER NOT NULL,
             RestaurantID INTEGER NOT NULL,
-            OrderDate TEXT NOT NULL CHECK()
-               """)
+            OrderDate TEXT NOT NULL CHECK(OrderDate IS date(OrderDate)),
+            FOREIGN KEY CustomerID REFERENCES Customer(CustomerID),
+            FOREIGN KEY RestaurantID REFERENCES Restaurant(ResturantID)
+        )
+        """)
+
+    # not sure what UnitPrice is for when we have DishPrice in the Dish table
     
+    cu.execute("""
+        CREATE TABLE OrdersItems(
+            OrderID INTEGER NOT NULL,
+            DishID INTEGER NOT NULL,
+            Quantity INTEGER NOT NULL,
+            PRIMARY KEY (OrderID, DishID),
+            FOREIGN KEY OrderID REFERENCES Orders(OrderID),
+            FOREIGN KEY DishID REFERENCES Dish(DishID)
+        )
+        """)
+
+def insert_sample_data():
+    pass
+
+def insert_real_data():
+    pass
 
 @app.route("/")
 def render_table():

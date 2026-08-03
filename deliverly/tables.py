@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from src.db import query_db
+from deliverly.db import query_db
 
 bp = Blueprint('tables', __name__, url_prefix='/tables')
 

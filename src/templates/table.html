@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Deliverly - Table Viewer</title>
-</head>
-<body>
-    <h1>Deliverly database viewer</h1>
+{% extends 'base.html' %}
 
+{% block header %}
+    <h1 class="page-head">{% block title %}Database viewer{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
     <table cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -27,5 +23,4 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+{% endblock %}

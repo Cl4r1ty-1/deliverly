@@ -6,11 +6,39 @@ table, th, td {
     border: 1px solid black;
 }
 
-h1 {
+.page-head {
     text-align: center;
+}
+
+.navbar-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+.navbar-ul .navbar-li {
+  float: left;
+}
+
+.navbar-ul .navbar-li .navbar-lnk {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar-ul .navbar-li .navbar-lnk:hover {
+  background-color: #111111;
 }
 
 .link {
     text-align: center;
     padding-top: 10px;
+}
+
+.navbar-ul .navbar-li .navbar-lnk:active {
+  background-color: #04AA6D;
 }

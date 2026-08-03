@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    {{ JSGlue.include() }}
-    <title>Deliverly - Home</title>
-</head>
-<body>
-    <h1>Deliverly</h1>
+{% extends 'base.html' %}
 
+{% block header %}
+    <h1 class="page-head">{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
     <table style="margin: 0px auto;">
         <thead>
             <tr>
@@ -35,9 +30,5 @@
                 </td>
             </tr>
     </table>
-    <div class="link">
-        <a href="{{ url_for('tables.customers') }}">Go to table</a>
-    </div>
     <script src="{{ url_for('static', filename='js/db_admin.js') }}"></script>
-</body>
-</html>
+{% endblock %}

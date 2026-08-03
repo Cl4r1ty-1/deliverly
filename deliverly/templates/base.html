@@ -15,18 +15,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link{% if request.path == url_for('home') %} active{% endif %}" aria-current="page" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link{% if request.path.startswith('/tables/customers') %} active{% endif %}" href="{{ url_for('tables.customers') }}">Customers</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav ms-lg-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                             Account
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                             <li><a class="dropdown-item" href="#">Login</a></li>
                             <li><a class="dropdown-item" href="#">Register</a></li>
                         </ul>

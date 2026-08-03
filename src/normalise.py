@@ -1,5 +1,5 @@
 import pandas as pd
-from app import BASE_DIR
+from . import BASE_DIR
 
 def normalise_csv():
     # read unnormalised data

@@ -2,7 +2,7 @@ document.getElementById('create_empty_tables').addEventListener('click', () => {
     const output = document.getElementById("init_status");
     output.innerText = "Status: Creating tables...";
 
-    fetch(Flask.url_for("blank"), {
+    fetch(Flask.url_for("database.blank"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ document.getElementById('insert_prod_data').addEventListener('click', () => {
     const output = document.getElementById("p_data_status");
     output.innerText = "Status: Inserting data...";
 
-    fetch(Flask.url_for("prod_data"), {
+    fetch(Flask.url_for("database.prod_data"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

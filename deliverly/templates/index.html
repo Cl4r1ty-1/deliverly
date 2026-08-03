@@ -1,34 +1,38 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1 class="page-head">{% block title %}Home{% endblock %}</h1>
+    <h1>{% block title %}Home{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    <table style="margin: 0px auto;">
-        <thead>
-            <tr>
-                <th scope="col">Create blank database</th>
-                <th scope="col">Insert production data</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td align="center">
-                    <button id="create_empty_tables">Action</button>
-                </td>
-                <td align="center">
-                    <button id="insert_prod_data">Action</button>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <p id="init_status">Status: Press Action</p>
-                </td>
-                <td align="center">
-                    <p id="p_data_status">Status: Press Action</p>
-                </td>
-            </tr>
-    </table>
+    <div class="justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-striped text-center align-middle" style="table-layout: fixed; width: 100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">Create blank database</th>
+                        <th scope="col">Insert production data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="create_empty_tables">Action</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="insert_prod_data">Action</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p id="init_status">Status: Press Action</p>
+                        </td>
+                        <td>
+                            <p id="p_data_status">Status: Press Action</p>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='js/db_admin.js') }}"></script>
 {% endblock %}

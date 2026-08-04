@@ -92,8 +92,8 @@ def prod_data():
           return jsonify({"status": "fail", "message":str(e)})
 
 # function for querying the db in the whole app
-def query_db(querty, args=(), one=False):
-     cu = get_db().execute(querty, args)
+def query_db(query, args=(), one=False):
+     cu = get_db().execute(query, args)
      data = cu.fetchall()
      headers = [desc[0] for desc in cu.description]
 

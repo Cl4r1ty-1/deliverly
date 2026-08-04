@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title%}Query Menu{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="text-center align-middle col-lg-4">
+            <form id="query_form">
+                <select class="form-select mt-4" id="query_select" name="query_select">
+                    <option value="default" selected>Choose a Query</option>
+                    {% for query, tup in query_list.items() %}
+                    <option value="{{ query }}" data-args="{{ tup[2] }}">{{ tup[0] }} {% if tup[2] == True %}- Args required: {{ tup[3] }}{% endif %}</option>
+                    {% endfor %}
+                </select>
+                <div>
+                    <label for="args_input" class="form-label mt-4">Query Arguments (blank unless specified)</label>
+                    <input type="text" class="form-control" id="args_input" placeholder="(none)" name="args_input" disabled>
+                </div>
+                <button type="submit" class="btn btn-primary mt-4" id="submit_query" disabled>Execute Query</button>
+            </form>
+        </div>
+    </div>
+    {% block table_header %}{% endblock %}
+    {% block table %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/query_menu.js') }}"></script>
+
+{% endblock %}

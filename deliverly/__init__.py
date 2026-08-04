@@ -29,10 +29,9 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
-    from . import db
+    from . import db, tables, queries
     db.init_app(app)
-
-    from . import tables
     app.register_blueprint(tables.bp)
+    app.register_blueprint(queries.bp, url_prefix='/queries')
 
     return app

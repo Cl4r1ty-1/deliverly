@@ -25,6 +25,9 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path.startswith(url_for('tables.restaurants')) %} active{% endif %}" href="{{ url_for('tables.restaurants') }}">Restaurants</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path.startswith(url_for('queries.query_menu')) %} active{% endif %}" href="{{ url_for('queries.query_menu') }}">Queries</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-lg-auto">
                     <li class="nav-item dropdown">

@@ -8,3 +8,9 @@ def customers():
     headers, data = query_db("SELECT * FROM Customer")
 
     return render_template('table.html', columns=headers, data=data)
+
+@bp.route('/restaurants')
+def restaurants():
+    headers, data = query_db("SELECT * FROM Restaurant")
+
+    return render_template('table.html', columns=headers, data=data)

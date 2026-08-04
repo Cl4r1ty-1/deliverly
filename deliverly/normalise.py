@@ -1,5 +1,7 @@
 import pandas as pd
-from . import BASE_DIR
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 def normalise_csv():
     # read unnormalised data

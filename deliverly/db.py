@@ -7,23 +7,25 @@ from . import BASE_DIR
 
 bp = Blueprint('database', __name__, url_prefix='/db')
 
+# init db connection based on the request (g)
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(current_app.config['DATABASE'])
 
     return g.db
 
-
+# close connection to avoid mem leak
 def close_db(exception=None):
     db = g.pop('db', None)
 
     if db is not None:
         db.close()
 
+# create blank tables based on given schema
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('schema.sql') as file:
+    with current_app.open_resource(BASE_DIR / 'schema.sql') as file:
         script = file.read().decode('utf-8')
         db.executescript(script)
         db.commit()
@@ -31,6 +33,7 @@ def init_db():
 # uncomment at some point if i want to change how date values are interpreted
 # sqlite3.register_converter()
 
+# insert normalised csv data
 def insert_real_data():
     db = get_db()
     cu = db.cursor()
@@ -88,6 +91,7 @@ def prod_data():
           print(traceback.format_exc())
           return jsonify({"status": "fail", "message":str(e)})
 
+# function for querying the db in the whole app
 def query_db(querty, args=(), one=False):
      cu = get_db().execute(querty, args)
      data = cu.fetchall()
@@ -97,5 +101,5 @@ def query_db(querty, args=(), one=False):
 
 
 def init_app(app):
-     app.teardown_appcontext(close_db)
+     app.teardown_appcontext(close_db) # this will close the connection when the app shuts down
      app.register_blueprint(bp)

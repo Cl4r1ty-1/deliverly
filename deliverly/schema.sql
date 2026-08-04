@@ -1,3 +1,6 @@
+-- ensure foreign key validation
+PRAGMA foreign_keys = ON;
+
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS OrdersItems;
 DROP TABLE IF EXISTS Dish;

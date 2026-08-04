@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Error{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="col-lg-4">
+            <div class="alert alert-danger text-center">
+                <strong>Database does not exist!</strong> <a href="{{ url_for('home') }}" class="alert-link">Create tables</a> and try again.
+            </div>
+        </div>
+    </div>
+{% endblock %}

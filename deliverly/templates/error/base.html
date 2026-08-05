@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-center">
         <div class="col-lg-4">
             <div class="alert alert-danger text-center">
-                <strong>Query Failed</strong> <a href="{{ url_for('queries.query_menu') }}" class="alert-link">Ensure your args are correct</a> and try again.
+                <strong>{% block error_head %}{% endblock %}</strong> <a href="{% block error_url %}{% endblock %}" class="alert-link">{% block error_link %}{% endblock %}</a>and try again.
             </div>
         </div>
     </div>

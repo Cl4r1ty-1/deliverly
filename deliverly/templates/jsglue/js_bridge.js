@@ -1,3 +1,5 @@
+// This code is NOT mine and is NOT part of the project. This file is required for thr Flask-JSGlue library to work correctly
+
 var {{ namespace }} = new(function () {
   'use strict';
   return {

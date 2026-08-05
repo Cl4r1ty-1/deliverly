@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 from deliverly.db import query_db
+from sqlite3 import OperationalError
 
 QUERY_LIST = {
     "query_1":
@@ -12,6 +13,8 @@ QUERY_LIST = {
         INNER JOIN Dish ON OrdersItems.DishID = Dish.DishID
         WHERE Customer.CustomerID = ?""",\
         True, "CustomerID"),
+    "query_2":
+    ("")
 }
 
 bp = Blueprint('queries', __name__)
@@ -30,9 +33,13 @@ def render_query(query):
                 headers, data = query_db(query_to_run[1], (args,))
                 return render_template('queries/table.html', columns=headers, data=data, query_list=QUERY_LIST, query_name=query_to_run[0], argument=args)
             else:
-                return render_template('queries/error.html')
+                return render_template('error/query.html')
         else:
             headers, data = query_db(query_to_run[1], ())
             return render_template('queries/table.html', columns=headers, data=data, query_list=QUERY_LIST, query_name=query_to_run[0], argument="")
     else:
-        return render_template('queries/error.html')
+        return render_template('error/query.html')
+
+@bp.errorhandler(OperationalError)
+def query_error(e):
+    return render_template('error/no_table.html')

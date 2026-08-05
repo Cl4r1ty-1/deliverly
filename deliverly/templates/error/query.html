@@ -1,13 +1,13 @@
 {% extends 'error/base.html' %}
 
 {% block error_head %}
-    Database does not exist!
+    Query Failed
 {% endblock %}
 
 {% block error_url %}
-    {{ url_for('home') }}
+    {{ url_for('queries.query_menu') }}
 {% endblock %}
 
 {% block error_link %}
-    Create tables
+    Ensure your args are correct
 {% endblock %}

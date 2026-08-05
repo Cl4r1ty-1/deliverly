@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request
 from flask_jsglue import JSGlue
 from pathlib import Path
+import traceback
 
 def create_app(test_config=None):
     global BASE_DIR
@@ -28,6 +29,12 @@ def create_app(test_config=None):
     @app.route("/")
     def home():
         return render_template("index.html")
+
+    @app.errorhandler(Exception)
+    def unknown_error(e):
+        print(traceback.format_exc())
+
+        return render_template('error/unknown.html')
 
     from . import db, tables, queries
     db.init_app(app)

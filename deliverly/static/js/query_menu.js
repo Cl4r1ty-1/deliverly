@@ -9,6 +9,8 @@ document.getElementById('query_select').addEventListener('change', (event) => {
 
     if (event.target.value != "default") {
         document.getElementById('submit_query').disabled = false;
+    } else {
+        document.getElementById('submit_query').disabled = true;
     }
     
 });

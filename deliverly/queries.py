@@ -38,7 +38,11 @@ QUERY_LIST = {
         False, ""),
     "query_5":  # yo what????
         ("Find customers who have never placed an order",
-            """""",
+            """SELECT Customer.CustomerID, Customer.FirstName, Customer.LastName, COUNT(Orders.OrderID) AS "Total Orders"
+            FROM Orders
+            INNER JOIN Customer ON Orders.CustomerID = Customer.CustomerID
+            GROUP BY Customer.CustomerID
+            HAVING "Total Orders" = 0""",
         False, ""),
     "query_6":
         ("List names of all dishes and the restaurants that serve them",

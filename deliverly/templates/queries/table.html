@@ -25,4 +25,16 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {% if not data %}
+    <div class="d-flex justify-content-center">
+        <div>
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="btn-close " data-bs-dismiss="alert"></button>
+                <h4 class="alert-heading">No data found!</h4>
+                <p class="mb-0">This is usually expected, if not: <a href="{{ url_for('queries.query_menu') }}" class="alert-link"> check your query</a> and try again.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

@@ -1,8 +1,11 @@
 {% extends 'queries/index.html' %}
 
 {% block table_header %}
-    <h2 class="mt-4 mb-4">Showing results for query: {{query_name}}</h2>
+<h2 class="mt-4 mb-4">Showing results for query: {{query_name}}</h2>
+<div class="d-flex align-content-center">
     <h3>Argument/ID - {{ argument }}</h3>
+    <a class="btn btn-light ms-auto me-5" href="{{ url_for('queries.download_report', query=query, args=argument) }}">Export Table</a>
+</div>
 {% endblock %}
 
 

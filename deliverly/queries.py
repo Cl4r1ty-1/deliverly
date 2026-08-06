@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request
-from deliverly.db import query_db
+from flask import Blueprint, render_template, send_from_directory, request
+import pandas as pd
+from deliverly.db import query_db, get_db, BASE_DIR
 
 QUERY_LIST = {
     "query_1":
@@ -67,12 +68,36 @@ def render_query(query):
             args = request.args.get('args', False, type=int)
             if args:
                 headers, data = query_db(query_to_run[1], (args,))
-                return render_template('queries/table.html', columns=headers, data=data, query_list=QUERY_LIST, query_name=query_to_run[0], argument=args)
+                return render_template('queries/table.html', 
+                                       columns=headers, 
+                                       data=data, 
+                                       query_list=QUERY_LIST,
+                                       query=query, 
+                                       query_name=query_to_run[0], 
+                                       argument=args)
             else:
                 return render_template('error/query.html')
         else:
             headers, data = query_db(query_to_run[1], ())
-            return render_template('queries/table.html', columns=headers, data=data, query_list=QUERY_LIST, query_name=query_to_run[0], argument="")
+            return render_template('queries/table.html', 
+                                   columns=headers, 
+                                   data=data, 
+                                   query_list=QUERY_LIST, 
+                                   query=query,
+                                   query_name=query_to_run[0], 
+                                   argument="")
     else:
         return render_template('error/query.html')
 
+@bp.route('/<query>/report')
+def download_report(query):
+    args = request.args.get('args', None, type=int)
+    if query in QUERY_LIST:
+        query_to_run = QUERY_LIST[query]
+        csv_path = BASE_DIR / "static" / "reports"
+        csv_name = f"{query}_report_{args}.csv" if args else f"{query}_report.csv"
+        df = pd.read_sql_query(query_to_run[1], get_db(), params=(args,) if args else ())
+        df.to_csv(csv_path / csv_name, index=False, encoding='utf-8')
+        return send_from_directory(csv_path, csv_name, as_attachment=True)
+    else:
+        raise Exception

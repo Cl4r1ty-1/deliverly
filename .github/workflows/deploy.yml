@@ -8,6 +8,7 @@ jobs:
     environment:
       deployment: true
       name: prod
+      url: https://deliverly.cl4r1ty.dev
     runs-on: self-hosted
     steps:
       - name: Pull latest code

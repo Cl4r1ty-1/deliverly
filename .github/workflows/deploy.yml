@@ -5,6 +5,9 @@ on:
 
 jobs:
   deploy:
+    environment:
+      deployment: true
+      name: production
     runs-on: self-hosted
     steps:
       - name: Pull latest code

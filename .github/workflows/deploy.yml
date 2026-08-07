@@ -7,7 +7,7 @@ jobs:
   deploy:
     environment:
       deployment: true
-      name: production
+      name: prod
     runs-on: self-hosted
     steps:
       - name: Pull latest code

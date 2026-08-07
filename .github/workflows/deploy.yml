@@ -9,20 +9,20 @@ jobs:
     steps:
       - name: Pull latest code
         run: |
-          cd /opt/flaskapp
+          cd /opt/deliverly
           git fetch origin production
           git reset --hard origin/production
 
       - name: Install dependencies
         run: |
-          cd /opt/flaskapp
+          cd /opt/deliverly
           source venv/bin/activate
           pip install -r requirements.txt
 
       - name: Restart gunicorn
-        run: sudo systemctl restart flaskapp.service
+        run: sudo systemctl restart deliverly-prod.service
 
       - name: Health check
         run: |
           sleep 2
-          curl -f http://localhost/ || (sudo journalctl -u flaskapp.service -n 50 && exit 1)
+          curl -f http://localhost/ || (sudo journalctl -u deliverly-prod.service -n 50 && exit 1)

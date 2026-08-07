@@ -20,9 +20,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Restart gunicorn
-        run: sudo systemctl restart deliverly-prod.service
+        run: sudo systemctl restart ${{ vars.SERVICE_NAME }}
 
       - name: Health check
         run: |
           sleep 2
-          curl -f http://localhost/ || (sudo journalctl -u deliverly-prod.service -n 50 && exit 1)
+          curl -f http://localhost/ || (sudo journalctl -u ${{ vars.SERVICE_NAME }} -n 50 && exit 1)

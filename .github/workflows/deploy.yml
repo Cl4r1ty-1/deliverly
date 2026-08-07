@@ -1,0 +1,28 @@
+name: Deploy to Production
+on:
+  push:
+    branches: [production]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Pull latest code
+        run: |
+          cd /opt/flaskapp
+          git fetch origin production
+          git reset --hard origin/production
+
+      - name: Install dependencies
+        run: |
+          cd /opt/flaskapp
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Restart gunicorn
+        run: sudo systemctl restart flaskapp.service
+
+      - name: Health check
+        run: |
+          sleep 2
+          curl -f http://localhost/ || (sudo journalctl -u flaskapp.service -n 50 && exit 1)

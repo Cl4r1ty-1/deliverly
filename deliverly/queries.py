@@ -52,6 +52,14 @@ QUERY_LIST = {
             INNER JOIN Restaurant ON Dish.RestaurantID = Restaurant.RestaurantID
             ORDER BY Restaurant.RestaurantName ASC""",
         False, ""),
+    "query_7": # there are multiple lol
+        ("Show the most popular dish",
+            """SELECT Dish.DishName, COUNT(OrdersItems.DishID) AS "Total Ordered"
+            FROM OrdersItems
+            INNER JOIN Dish ON OrdersItems.DishID = Dish.DishID
+            GROUP BY Dish.DishID
+            ORDER BY "Total Ordered" DESC""",
+        False, "")
 }
 
 bp = Blueprint('queries', __name__)

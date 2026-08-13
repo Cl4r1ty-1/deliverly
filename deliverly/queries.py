@@ -60,6 +60,46 @@ QUERY_LIST = {
             INNER JOIN Restaurant ON Dish.RestaurantID = Restaurant.RestaurantID
             GROUP BY Dish.DishID
             ORDER BY "Total Ordered" DESC""",
+        False, ""),
+    "query_8":
+        ("Find the average dish price of each restaurant",
+            """SELECT Restaurant.RestaurantName, ROUND(SUM(Dish.DishPrice)/COUNT(Dish.DishPrice), 2) AS "Average Price ($)"
+            FROM Restaurant
+            INNER JOIN Dish ON Restaurant.RestaurantID = Dish.RestaurantID
+            GROUP BY Restaurant.RestaurantID""",
+        False, ""),
+    "query_9":
+        ("List all orders with dishes and quantities",
+            """SELECT Orders.OrderID, Orders.OrderDate, Customer.FirstName || ' ' || Customer.LastName AS 'Customer Name', Dish.DishName, OrdersItems.Quantity
+            From Orders
+            INNER JOIN Customer ON Orders.CustomerID = Customer.CustomerID
+            INNER JOIN OrdersItems ON Orders.OrderID = OrdersItems.OrderID
+            INNER JOIN Dish ON OrdersItems.DishID = Dish.DishID
+            ORDER BY Orders.OrderID ASC""",
+        False, ""),
+    "query_10":
+        ("Calculate Total Revenue of each Restaurant",
+            """SELECT Restaurant.RestaurantName, SUM(Dish.DishPrice*OrdersItems.Quantity) AS "Total Revenue ($)"
+            FROM Restaurant
+            INNER JOIN Dish ON Dish.RestaurantID = Restaurant.RestaurantID
+            INNER JOIN OrdersItems ON OrdersItems.DishID = Dish.DishID
+            GROUP BY Restaurant.RestaurantID
+            ORDER BY "Total Revenue ($)" DESC""",
+        False, ""),
+    "query_11":
+        ("Show the customer's name and email",
+            """SELECT FirstName || ' ' || LastName || ' ' || CustomerEmail AS CustomerContact
+            FROM Customer
+            WHERE CustomerID = ?""",
+        True, "CustomerID"),
+    "query_12":
+        ("Show the total amount spent on each dish",
+            """SELECT Dish.DishName, Restaurant.RestaurantName, Dish.DishPrice*SUM(OrdersItems.Quantity) AS CalculatedTotal
+            FROM Dish
+            INNER JOIN Restaurant ON Restaurant.RestaurantID = Dish.RestaurantID
+            INNER JOIN OrdersItems ON OrdersItems.DishID = Dish.DishID
+            GROUP BY Dish.DishID
+            ORDER BY CalculatedTotal DESC""",
         False, "")
 }
 

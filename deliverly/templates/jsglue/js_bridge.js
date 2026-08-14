@@ -1,4 +1,9 @@
-// This code is NOT mine and is NOT part of the project. This file is required for thr Flask-JSGlue library to work correctly
+// This code is NOT mine and is NOT part of the project. This file is required for thr Flask-JSGlue library to work correctly.
+
+// source + credit to: https://github.com/stewartpark/Flask-JSGlue/blob/master/templates/jsglue/js_bridge.js
+// code licenced under: https://opensource.org/license/bsd-2-clause
+// justification for including this code: https://github.com/stewartpark/Flask-JSGlue/issues/34#issuecomment-1241505538
+
 
 var {{ namespace }} = new(function () {
   'use strict';

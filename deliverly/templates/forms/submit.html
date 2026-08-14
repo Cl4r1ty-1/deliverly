@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Form Submitted!{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class=" mt-4 container d-flex justify-content-center align-items-center">
+        <div class="text-center align-middle">
+            <div class="alert alert-success">
+                <strong>New {{ form }} entry recorded!</strong> Would you like to <a href="{{ url_for('home') }}" class="alert-link">go home</a>?
+            </div>
+        </div>
+    </div>
+{% endblock %}

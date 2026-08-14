@@ -96,7 +96,7 @@ def query_db(query, args=(), one=False):
      cu = get_db().execute(query, args)
      data = cu.fetchall()
      headers = [desc[0] for desc in cu.description]
-
+     cu.close()    
      return headers, (data[0] if data else None) if one else data
 
 

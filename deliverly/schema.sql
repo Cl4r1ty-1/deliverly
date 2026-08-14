@@ -13,18 +13,18 @@ CREATE TABLE Customer(
     CustomerID INTEGER PRIMARY KEY,
     FirstName TEXT NOT NULL,
     LastName TEXT NOT NULL,
-    CustomerEmail TEXT NOT NULL,
+    CustomerEmail TEXT NOT NULL CHECK(CustomerEmail LIKE '%_@__%.__%'),
     CustomerAddress TEXT NOT NULL,
     Suburb TEXT NOT NULL,
     PostCode INTEGER NOT NULL,
-    CustomerPhone TEXT NOT NULL
+    CustomerPhone TEXT NOT NULL CHECK(CustomerPhone LIKE '(__) ________')
 );
         
 CREATE TABLE Restaurant(
     RestaurantID INTEGER PRIMARY KEY,
     RestaurantName TEXT NOT NULL,
     RestaurantAddress TEXT NOT NULL,
-    RestaurantPhone TEXT NOT NULL
+    RestaurantPhone TEXT NOT NULL CHECK(RestaurantPhone LIKE '(__) ________')
 );
 
 CREATE TABLE Dish(

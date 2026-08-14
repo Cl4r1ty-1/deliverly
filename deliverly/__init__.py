@@ -36,9 +36,10 @@ def create_app(test_config=None):
 
         return render_template('error/unknown.html')
 
-    from . import db, tables, queries
+    from . import db, tables, queries, forms
     db.init_app(app)
     app.register_blueprint(tables.bp)
     app.register_blueprint(queries.bp, url_prefix='/queries')
+    app.register_blueprint(forms.bp, url_prefix='/forms')
 
     return app

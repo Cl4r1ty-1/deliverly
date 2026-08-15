@@ -32,3 +32,7 @@ def new_customer_form():
     print("New customer entry.")
 
     return redirect(url_for('forms.success', form="customer"))
+
+@bp.errorhandler(Exception)
+def form_error(e):
+    return render_template('error/form.html')

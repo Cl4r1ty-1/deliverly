@@ -36,6 +36,10 @@ def create_app(test_config=None):
 
         return render_template('error/unknown.html')
 
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error/404.html')
+
     from . import db, tables, queries, forms
     db.init_app(app)
     app.register_blueprint(tables.bp)

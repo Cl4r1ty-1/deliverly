@@ -44,7 +44,6 @@ CREATE TABLE Orders(
     FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
 );
 
--- not sure what UnitPrice is for when we have DishPrice in the Dish table
 CREATE TABLE OrdersItems(
     OrderID INTEGER NOT NULL,
     DishID INTEGER NOT NULL,

@@ -1,0 +1,13 @@
+{% extends 'error/base.html' %}
+
+{% block error_head %}
+    Form submission failed
+{% endblock %}
+
+{% block error_url %}
+    {{ url_for('home') }}
+{% endblock %}
+
+{% block error_link %}
+    Go home
+{% endblock %}

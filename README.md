@@ -37,7 +37,7 @@ flask --app ./deliverly run
 ```
 
 In your browser go to
-https://localhost:5000
+http://localhost:5000
 
-## Licence
+## License
 MIT

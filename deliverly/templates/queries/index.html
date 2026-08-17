@@ -9,7 +9,7 @@
         <div class="text-center align-middle col-lg-4">
             <form id="query_form">
                 <select class="form-select mt-4" id="query_select" name="query_select">
-                    <option value="default" selected>Choose a Query</option>
+                    <option value="default" selected disabled>Choose a Query</option>
                     {% for query, tup in query_list.items() %}
                     <option value="{{ query }}" data-args="{{ tup[2] }}">{{ tup[0] }} {% if tup[2] == True %}- Args required: {{ tup[3] }}{% endif %}</option>
                     {% endfor %}

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from deliverly.db import get_db
+from deliverly.db import get_db, query_db
 
 bp = Blueprint('forms', __name__)
 
@@ -50,6 +50,26 @@ def new_restaurant_form():
     print("New restaurant entry.")
 
     return redirect(url_for('forms.success', form="restaurant"))
+
+@bp.route('/new_dish', methods=["GET", "POST"])
+def new_dish_form():
+    if request.method == "GET":
+        headers, data = query_db("SELECT RestaurantID, RestaurantName FROM Restaurant")
+        return render_template('forms/dish.html', restaurants=data)
+
+    values = (request.form.get("restaurant_id"),
+              request.form.get("dish_name"),
+              request.form.get("dish_price"))
+
+    db = get_db()
+    cu = db.cursor()
+    cu.execute("INSERT INTO Dish(RestaurantID, DishName, DishPrice) VALUES (?, ?, ?)", values)
+    db.commit()
+    cu.close()
+    print("New dish entry.")
+
+    return redirect(url_for('forms.success', form='dish'))
+    
 
 @bp.errorhandler(Exception)
 def form_error(e):

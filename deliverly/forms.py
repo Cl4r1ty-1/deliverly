@@ -33,6 +33,24 @@ def new_customer_form():
 
     return redirect(url_for('forms.success', form="customer"))
 
+@bp.route('/new_restaurant', methods=["GET", "POST"])
+def new_restaurant_form():
+    if request.method == "GET":
+        return render_template('forms/restaurant.html')
+
+    values = (request.form.get("restaurant_name"),
+              request.form.get("address"),
+              request.form.get("phone"))
+
+    db = get_db()
+    cu = db.cursor()
+    cu.execute("INSERT INTO Restaurant(RestaurantName, RestaurantAddress, RestaurantPhone) VALUES (?, ?, ?)", values)
+    db.commit()
+    cu.close()
+    print("New restaurant entry.")
+
+    return redirect(url_for('forms.success', form="restaurant"))
+
 @bp.errorhandler(Exception)
 def form_error(e):
     return render_template('error/form.html')

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from deliverly.db import get_db, query_db
 
 bp = Blueprint('forms', __name__)
@@ -69,7 +69,24 @@ def new_dish_form():
     print("New dish entry.")
 
     return redirect(url_for('forms.success', form='dish'))
-    
+
+@bp.route('/get_dishes', methods=["POST"])
+def get_dishes():
+    try:
+        restaurant = request.json['id']
+        headers, dishes = query_db("SELECT DishID, DishName, DishPrice FROM Dish WHERE RestaurantID = ?", (restaurant,))
+        return jsonify({"status":"success", "dishes":dishes})
+    except Exception as e:
+        return jsonify({"status":"fail", "error":str(e)})
+
+@bp.route('/new_order', methods=["GET", "POST"])
+def new_order_form():
+    if request.method == 'GET':
+        headers, customers = query_db("SELECT CustomerID, FirstName || ' ' || LastName AS Name FROM Customer")
+        headers, restaurants = query_db("SELECT RestaurantID, RestaurantName FROM Restaurant")
+        headers, dishs = query_db("SELECT DishID, DishName FROM Dish")
+
+        return render_template('forms/order.html', customers=customers, restaurants=restaurants, dishs=dishs)
 
 @bp.errorhandler(Exception)
 def form_error(e):

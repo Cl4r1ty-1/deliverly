@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from deliverly.db import get_db, query_db
+from datetime import date
 
 bp = Blueprint('forms', __name__)
 
@@ -86,8 +87,33 @@ def new_order_form():
         headers, restaurants = query_db("SELECT RestaurantID, RestaurantName FROM Restaurant")
         headers, dishs = query_db("SELECT DishID, DishName FROM Dish")
 
-        return render_template('forms/order.html', customers=customers, restaurants=restaurants, dishs=dishs)
+        return render_template('forms/order.html', 
+                               customers=customers, 
+                               restaurants=restaurants, 
+                               dishs=dishs)
 
-@bp.errorhandler(Exception)
-def form_error(e):
-    return render_template('error/form.html')
+    customer_id = request.form.get("customer_id")
+    restaurant_id = request.form.get("restaurant_id")
+    dish_ids = request.form.getlist("dishs")
+
+    items = []
+    for dish_id in dish_ids:
+        quantity = request.form.get(f"quantity_{dish_id}", type=int)
+        items.append((int(dish_id), quantity))
+
+    db = get_db()
+    cu = db.cursor()
+
+    cu.execute("""INSERT INTO Orders (CustomerID, RestaurantID, OrderDate)
+                  VALUES (?, ?, ?)""", (customer_id, restaurant_id, date.today()))
+    order_id = cu.lastrowid
+    db.executemany("""INSERT INTO OrdersItems (OrderID, DishID, Quantity)
+                      VALUES (?, ?, ?)""", [(order_id, dish_id, quantity) for dish_id, quantity in items])
+    db.commit()
+    cu.close()
+
+    return redirect(url_for('forms.success', form='order'))    
+
+# @bp.errorhandler(Exception)
+# def form_error(e):
+#     return render_template('error/form.html')

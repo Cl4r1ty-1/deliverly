@@ -28,7 +28,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="dishs">Dishs</label>
-                    <select id="dishs" class="form-select" data-clearable="true" data-searchable="true" name="dishs" multiple disabled required>
+                    <select id="dishs" class="form-select" data-clearable="true" data-searchable="true" data-dishes-url="{{ url_for('forms.get_dishes') }}" name="dishs" multiple disabled required>
                         <option value="" disabled>--- Choose ---</option>
                     </select>
                 </div>
@@ -65,5 +65,5 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/form_validation.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/order_form.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/order_form.js', v=2) }}"></script>
 {% endblock %}

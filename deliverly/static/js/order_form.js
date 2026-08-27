@@ -24,7 +24,7 @@ document.getElementById('restaurantID').addEventListener('change', (event) => {
         id: restaurant
     }
 
-    fetch(Flask.url_for("forms.get_dishes"), {
+    fetch(dishSelect.dataset.dishesUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

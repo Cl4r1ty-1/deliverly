@@ -5,12 +5,19 @@ from deliverly.db import query_db, get_db, BASE_DIR
 QUERY_LIST = {
     "query_1":
         ("Retrieve a customer's orders",
-            """SELECT Orders.OrderID, Orders.OrderDate, Restaurant.RestaurantName, Dish.DishName, Dish.DishPrice, OrdersItems.Quantity, (Dish.DishPrice*OrdersItems.Quantity)+5.95 AS "Total ($)"
+            """WITH OrderSubtotals AS (
+                SELECT OrdersItems.OrderID, SUM(Dish.DishPrice * OrdersItems.Quantity) AS Subtotal
+                FROM OrdersItems
+                INNER JOIN Dish ON OrdersItems.DishID = Dish.DishID
+                GROUP BY OrdersItems.OrderID
+            )
+            SELECT Orders.OrderID, Orders.OrderDate, Restaurant.RestaurantName, Dish.DishName, Dish.DishPrice, OrdersItems.Quantity, OrderSubtotals.Subtotal + 5.95 AS "Total ($)"
             FROM Orders
             INNER JOIN Restaurant ON Orders.RestaurantID = Restaurant.RestaurantID
             INNER JOIN Customer ON Orders.CustomerID = Customer.CustomerID
             INNER JOIN OrdersItems ON Orders.OrderID = OrdersItems.OrderID
             INNER JOIN Dish ON OrdersItems.DishID = Dish.DishID
+            INNER JOIN OrderSubtotals ON Orders.OrderID = OrderSubtotals.OrderID
             WHERE Customer.CustomerID = ?
             ORDER BY Orders.OrderID""",\
         True, "CustomerID"),

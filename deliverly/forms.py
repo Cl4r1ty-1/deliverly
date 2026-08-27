@@ -114,6 +114,6 @@ def new_order_form():
 
     return redirect(url_for('forms.success', form='order'))    
 
-# @bp.errorhandler(Exception)
-# def form_error(e):
-#     return render_template('error/form.html')
+@bp.errorhandler(Exception)
+def form_error(e):
+    return render_template('error/form.html')

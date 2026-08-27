@@ -9,7 +9,7 @@ jobs:
       deployment: true
       name: prod
       url: https://deliverly.cl4r1ty.dev
-    runs-on: Linux
+    runs-on: self-hosted
     steps:
       - name: Pull latest code
         run: |

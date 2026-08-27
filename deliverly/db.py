@@ -1,6 +1,6 @@
 import sqlite3
 import csv
-# from datetime import datetime
+from dateutil import parser
 from flask import current_app, g, jsonify, Blueprint
 import traceback
 from . import BASE_DIR
@@ -10,7 +10,7 @@ bp = Blueprint('database', __name__, url_prefix='/db')
 # init db connection based on the request (g)
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect(current_app.config['DATABASE'])
+        g.db = sqlite3.connect(current_app.config['DATABASE'], detect_types=sqlite3.PARSE_DECLTYPES)
 
     return g.db
 
@@ -29,9 +29,6 @@ def init_db():
         script = file.read().decode('utf-8')
         db.executescript(script)
         db.commit()
-
-# uncomment at some point if i want to change how date values are interpreted
-# sqlite3.register_converter()
 
 # insert normalised csv data
 def insert_real_data():
@@ -59,6 +56,7 @@ def insert_real_data():
             reader = csv.reader(file)
             next(reader)
             for row in reader:
+                row[3] = parser.parse(row[3]).date()
                 cu.execute("INSERT INTO Orders (OrderID, CustomerID, RestaurantID, OrderDate) VALUES (?, ?, ?, ?)", row)
 
     with open(BASE_DIR / "data" / "ordersitems.csv", 'r') as file:

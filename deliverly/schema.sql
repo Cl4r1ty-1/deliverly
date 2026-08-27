@@ -1,22 +1,22 @@
 -- ensure foreign key validation
 PRAGMA foreign_keys = ON;
 
+-- delete all data
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS OrdersItems;
 DROP TABLE IF EXISTS Dish;
 DROP TABLE IF EXISTS Restaurant;
 DROP TABLE IF EXISTS Customer;
-
+    
 -- create new tables
-
 CREATE TABLE Customer(
     CustomerID INTEGER PRIMARY KEY,
-    FirstName TEXT NOT NULL,
-    LastName TEXT NOT NULL,
+    FirstName TEXT NOT NULL CHECK(LENGTH(FirstName) <= 40),
+    LastName TEXT NOT NULL CHECK(LENGTH(LastName) <= 40),
     CustomerEmail TEXT NOT NULL CHECK(CustomerEmail LIKE '%_@__%.__%'),
     CustomerAddress TEXT NOT NULL,
     Suburb TEXT NOT NULL,
-    PostCode INTEGER NOT NULL,
+    PostCode INTEGER NOT NULL CHECK(LENGTH(PostCode) = 4),
     CustomerPhone TEXT NOT NULL CHECK(CustomerPhone LIKE '(__) ________')
 );
         

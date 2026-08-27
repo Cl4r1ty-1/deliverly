@@ -7,6 +7,8 @@
     <title>Deliverly - {% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/slate/bootstrap.min.css" integrity="sha384-qhrBcipvKS9sQcI3lcoXpdKNs9jmQAunazzwZW3aZeuFMoRih2NYJIDsr6XTFndn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/use-bootstrap-select@2.2.1/dist/use-bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/use-bootstrap-select@2.2.1/dist/use-bootstrap-select.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -37,17 +39,7 @@
                             <li><a class="dropdown-item" href="{{ url_for('forms.new_customer_form') }}">Customer</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('forms.new_restaurant_form') }}">Restaurant</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('forms.new_dish_form') }}">Dish</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-lg-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            Account
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                            <li><a class="dropdown-item" href="/#">Login</a></li>
-                            <li><a class="dropdown-item" href="/#">Register</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('forms.new_order_form') }}">Order</a></li>
                         </ul>
                     </li>
                 </ul>

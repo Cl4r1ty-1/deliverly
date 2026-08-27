@@ -1,4 +1,4 @@
-// This code is NOT mine and is NOT part of the project. This file is required for thr Flask-JSGlue library to work correctly.
+// This code is NOT mine and is NOT part of the project. This file is required for the Flask-JSGlue library to work correctly.
 
 // source + credit to: https://github.com/stewartpark/Flask-JSGlue/blob/master/templates/jsglue/js_bridge.js
 // code licenced under: https://opensource.org/license/bsd-2-clause

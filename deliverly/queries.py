@@ -64,7 +64,7 @@ QUERY_LIST = {
         False, ""),
     "query_8":
         ("Find the average dish price of each restaurant",
-            """SELECT Restaurant.RestaurantName, ROUND(SUM(Dish.DishPrice)/COUNT(Dish.DishPrice), 2) AS "Average Price ($)"
+            """SELECT Restaurant.RestaurantName, ROUND(AVG(Dish.DishPrice), 2) AS "Average Price ($)"
             FROM Restaurant
             INNER JOIN Dish ON Restaurant.RestaurantID = Dish.RestaurantID
             GROUP BY Restaurant.RestaurantID""",
@@ -101,6 +101,37 @@ QUERY_LIST = {
             INNER JOIN OrdersItems ON OrdersItems.DishID = Dish.DishID
             GROUP BY Dish.DishID
             ORDER BY CalculatedTotal DESC""",
+        False, ""),
+    "query_13":
+        ("Show each order with its cost",
+            """SELECT Orders.OrderID, Customer.FirstName || ' ' || Customer.LastName AS 'Customer Name', SUM(Dish.DishPrice*OrdersItems.Quantity)+5.95 AS "Order Price ($)"
+            FROM Orders
+            INNER JOIN Customer ON Customer.CustomerID = Orders.CustomerID
+            INNER JOIN OrdersItems ON Orders.OrderID = OrdersItems.OrderID
+            INNER JOIN Dish ON Dish.DishID = OrdersItems.DishID
+            GROUP BY Orders.OrderID
+            ORDER BY "Order Price ($)" DESC""",
+        False, ""),
+    "query_14":
+        ("Get the most expensive dish at each restaurant",
+            """SELECT Restaurant.RestaurantName, Dish.DishName, MAX(Dish.DishPrice) AS "Cost"
+            FROM Dish
+            INNER JOIN Restaurant ON Restaurant.RestaurantID = Dish.RestaurantID
+            GROUP BY Restaurant.RestaurantID
+            ORDER BY "Cost" DESC""",
+        False, ""),
+    "query_15":
+        ("Get the cheapest dish at each restaurant",
+            """SELECT Restaurant.RestaurantName, Dish.DishName, MIN(Dish.DishPrice) AS "Cost"
+            FROM Dish
+            INNER JOIN Restaurant ON Restaurant.RestaurantID = Dish.RestaurantID
+            GROUP BY Restaurant.RestaurantID
+            ORDER BY "Cost" ASC""",
+        False, ""),
+    "query_16":
+        ("Calculate the total revenue from delivery fees",
+            """SELECT ROUND(COUNT(OrderID)*5.95, 2) AS "Total delivery fee revenue ($)"
+            From Orders""",
         False, "")
 }
 

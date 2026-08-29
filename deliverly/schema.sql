@@ -41,7 +41,7 @@ CREATE TABLE Orders(
     RestaurantID INTEGER NOT NULL,
     OrderDate DATE NOT NULL,
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID) ON DELETE CASCADE,
-    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID) ON DELETE CASCADE
 );
 
 CREATE TABLE OrdersItems(
@@ -50,5 +50,5 @@ CREATE TABLE OrdersItems(
     Quantity INTEGER NOT NULL CHECK(Quantity > 0),
     PRIMARY KEY (OrderID, DishID),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
-    FOREIGN KEY (DishID) REFERENCES Dish(DishID)
+    FOREIGN KEY (DishID) REFERENCES Dish(DishID) ON DELETE CASCADE
 );

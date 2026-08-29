@@ -89,6 +89,10 @@ def prod_data():
           print(traceback.format_exc())
           return jsonify({"status": "fail", "message":str(e)})
 
+@bp.route('/delete/<table>/<id>')
+def delete_entry(table, id):
+     pass
+
 # function for querying the db in the whole app
 def query_db(query, args=(), one=False):
      cu = get_db().execute(query, args)

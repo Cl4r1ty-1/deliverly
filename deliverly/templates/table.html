@@ -11,6 +11,7 @@
             {% for c in columns %}
                 <th scope="col">{{c}}</th>
             {% endfor %}
+                <th scope="col">Delete Entry</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                 {% for col in row %}
                 <td>{{col}}</td>
                 {% endfor %}
+                <td><button class="btn btn-primary" id="delete_{{ table }}_{{ row[0] }}">Delete</button></td>
             </tr>
             {% endfor %}
         </tbody>

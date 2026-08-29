@@ -8,13 +8,13 @@ bp = Blueprint('tables', __name__, url_prefix='/tables')
 def customers():
     headers, data = query_db("SELECT * FROM Customer")
 
-    return render_template('table.html', columns=headers, data=data)
+    return render_template('table.html', columns=headers, data=data, table="Customer")
 
 @bp.route('/restaurants')
 def restaurants():
     headers, data = query_db("SELECT * FROM Restaurant")
 
-    return render_template('table.html', columns=headers, data=data)
+    return render_template('table.html', columns=headers, data=data, table="Restaurant")
 
 @bp.errorhandler(OperationalError)
 def no_table(e):

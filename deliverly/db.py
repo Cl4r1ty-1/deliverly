@@ -11,7 +11,7 @@ bp = Blueprint('database', __name__, url_prefix='/db')
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(current_app.config['DATABASE'], detect_types=sqlite3.PARSE_DECLTYPES)
-
+        g.db.execute("PRAGMA foreign_keys = ON") # this resets on every db connection, so we need to override it
     return g.db
 
 # close connection to avoid mem leak

@@ -49,10 +49,11 @@ QUERY_LIST = {
         False, ""),
     "query_6":
         ("List names of all dishes and the restaurants that serve them",
-            """SELECT Dish.DishName, Restaurant.RestaurantName
+            """SELECT Dish.DishName, GROUP_CONCAT(Restaurant.RestaurantName, ', ') AS Restaurants
             FROM Dish
             INNER JOIN Restaurant ON Dish.RestaurantID = Restaurant.RestaurantID
-            ORDER BY Restaurant.RestaurantName ASC""",
+            GROUP BY Dish.DishName
+            ORDER BY Dish.DishName ASC""",
         False, ""),
     "query_7": # there are multiple, thats ok leave without a LIMIT
         ("Show the most popular dish",

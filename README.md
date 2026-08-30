@@ -39,5 +39,68 @@ flask --app ./deliverly run
 In your browser go to
 http://localhost:5000
 
+## Project Layout
+
+```bash
+.
+├── .github
+│   └── workflows
+│       └── deploy.yml
+├── .gitignore
+├── LICENSE
+├── README.md
+├── data.csv # raw data given
+├── deliverly
+│   ├── __init__.py
+│   ├── data # normalised data
+│   │   ├── customer.csv
+│   │   ├── dish.csv
+│   │   ├── orders.csv
+│   │   ├── ordersitems.csv
+│   │   └── restaurant.csv
+│   ├── db.py
+│   ├── forms.py
+│   ├── normalise.py # script to normalise data.csv
+│   ├── queries.py
+│   ├── schema.sql # sql to initalise database
+│   ├── static
+│   │   ├── favicon.ico
+│   │   ├── js
+│   │   │   ├── db_admin.js
+│   │   │   ├── form_validation.js
+│   │   │   ├── order_form.js
+│   │   │   └── query_menu.js
+│   │   └── reports
+│   │       └── .gitignore
+│   ├── tables.py
+│   └── templates
+│       ├── base.html
+│       ├── error
+│       │   ├── 404.html
+│       │   ├── base.html
+│       │   ├── form.html
+│       │   ├── no_table.html
+│       │   ├── query.html
+│       │   └── unknown.html
+│       ├── forms
+│       │   ├── customer.html
+│       │   ├── dish.html
+│       │   ├── order.html
+│       │   ├── restaurant.html
+│       │   └── submit.html
+│       ├── index.html
+│       ├── jsglue
+│       │   └── js_bridge.js
+│       ├── queries
+│       │   ├── index.html
+│       │   └── table.html
+│       └── table.html
+└── requirements.txt
+
+12 directories, 41 files
+
+```
+
+
 ## License
 MIT

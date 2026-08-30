@@ -42,6 +42,9 @@
                             <li><a class="dropdown-item" href="{{ url_for('forms.new_order_form') }}">Order</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if request.path == url_for('admin_menu') %} active{% endif %}" aria-current="page" href="{{ url_for('admin_menu') }}">Admin</a>
+                    </li>
                 </ul>
             </div>
         </div>

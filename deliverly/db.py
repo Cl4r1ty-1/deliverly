@@ -65,6 +65,46 @@ def insert_real_data():
             for row in reader:
                 cu.execute("INSERT INTO OrdersItems (OrderID, DishID, Quantity) VALUES (?, ?, ?)", row)
     db.commit()
+    cu.close()
+
+# generate test data
+def insert_test_data():
+     db = get_db()
+     cu = db.cursor()
+
+     CUSTOMERS = (
+          (1, "Oliver", "Sykes", "oli@gmail.com", "7 Sempiternal Road", "East Perth", 6004, "(08) 92641843"),
+          (2, "Sam", "Carter", "sam@gmail.com", "3 Sky Place", "Mandurah", 6210, "(08) 91235456"),
+          (3, "William", "Ramos", "will@gmail.com", "89 Flame Avenue", "Secret Harbour", 6173, "(08) 96313521")
+     )
+     RESTAURANTS = (
+          (1, "KFC", "1234 Marmion Avenue", "(08) 98343156"),
+          (2, "Hungry Jack's", "1844 Marmion Avenue", "(08) 64043699"),
+          (3, "McDonalds", "45 Ancourage Drive", "(08) 64329462")
+     )
+     DISHS = (
+          (1, 1, "Bucket", 10.00),
+          (2, 2, "Whopper", 12.00),
+          (3, 3, "Big Mac", 7.00)
+     )
+     ORDERS = (
+          (1, 1, 2, '2026-08-30'),
+          (2, 2, 3, '2025-11-30'),
+          (3, 3, 1, '2026-01-01')
+     )
+     ORDERSITEMS = (
+          (1, 2, 3),
+          (2, 3, 2),
+          (3, 1, 1)
+     )
+
+     cu.executemany("INSERT INTO Customer (CustomerID, FirstName, LastName, CustomerEmail, CustomerAddress, Suburb, PostCode, CustomerPhone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", CUSTOMERS)
+     cu.executemany("INSERT INTO Restaurant (RestaurantID, RestaurantName, RestaurantAddress, RestaurantPhone) VALUES (?, ?, ?, ?)", RESTAURANTS)
+     cu.executemany("INSERT INTO Dish (DishID, RestaurantID, DishName, DishPrice) VALUES (?, ?, ?, ?)", DISHS)
+     cu.executemany("INSERT INTO Orders (OrderID, CustomerID, RestaurantID, OrderDate) VALUES (?, ?, ?, ?)", ORDERS)
+     cu.executemany("INSERT INTO OrdersItems (OrderID, DishID, Quantity) VALUES (?, ?, ?)", ORDERSITEMS)
+     db.commit()
+     cu.close()
 
 @bp.route('/blank', methods=["POST"])
 def blank():
@@ -77,7 +117,8 @@ def blank():
         print(traceback.format_exc())
         return jsonify({"status": "fail", "message":str(e)})
 
-# note: make this 'insert data' use AJAX to make a drop down with test or prod data :)
+# these two function are used to insert either production data (from the original data.csv)
+# or test data i define myself
 @bp.route('/prod_data', methods=['POST'])
 def prod_data():
      print("Inserting data...")
@@ -88,6 +129,18 @@ def prod_data():
      except Exception as e:
           print(traceback.format_exc())
           return jsonify({"status": "fail", "message":str(e)})
+
+@bp.route('/test_data', methods=['POST'])
+def test_data():
+     print("Inserting data...")
+     try:
+        insert_test_data()
+        print("Data inserted")
+        return jsonify({"status": "success", "message":"Test data entered successfully!"})
+     except Exception as e:
+          print(traceback.format_exc())
+          return jsonify({"status": "fail", "message":str(e)})
+
 
 @bp.route('/delete/<table>/<id>')
 def delete_entry(table, id):

@@ -3,6 +3,7 @@ import pandas as pd
 from deliverly.db import query_db, get_db, BASE_DIR
 
 QUERY_LIST = {
+    # Required queries
     "query_1":
         ("Retrieve a customer's orders",
             """SELECT Orders.OrderID, Orders.OrderDate, Restaurant.RestaurantName, Dish.DishName, Dish.DishPrice, OrdersItems.Quantity, (Dish.DishPrice*OrdersItems.Quantity)+5.95 AS "Total ($)"
@@ -38,7 +39,7 @@ QUERY_LIST = {
             GROUP BY Customer.CustomerID
             ORDER BY Customer.CustomerID DESC""",
         False, ""),
-    "query_5":  # yo what????
+    "query_5":
         ("Find customers who have never placed an order",
             """SELECT Customer.CustomerID, Customer.FirstName, Customer.LastName, COUNT(Orders.OrderID) AS "Total Orders"
             FROM Orders
@@ -102,6 +103,7 @@ QUERY_LIST = {
             GROUP BY Dish.DishID
             ORDER BY CalculatedTotal DESC""",
         False, ""),
+    # Custom Queries
     "query_13":
         ("Show each order with its cost",
             """SELECT Orders.OrderID, Customer.FirstName || ' ' || Customer.LastName AS 'Customer Name', SUM(Dish.DishPrice*OrdersItems.Quantity)+5.95 AS "Order Price ($)"
@@ -176,9 +178,13 @@ def download_report(query):
     if query in QUERY_LIST:
         query_to_run = QUERY_LIST[query]
         csv_path = BASE_DIR / "static" / "reports"
-        csv_name = f"{query}_report_{args}.csv" if args else f"{query}_report.csv"
-        df = pd.read_sql_query(query_to_run[1], get_db(), params=(args,) if args else ())
-        df.to_csv(csv_path / csv_name, index=False, encoding='utf-8')
-        return send_from_directory(csv_path, csv_name, as_attachment=True)
+        csv_name = f"{query}_report_{args}.csv" if args else f"{query}_report.csv" # include args in filename
+        df = pd.read_sql_query(query_to_run[1], get_db(), params=(args,) if args else ()) # convert to pandas dataframe
+        df.to_csv(csv_path / csv_name, index=False, encoding='utf-8') # export to csv
+        return send_from_directory(csv_path, csv_name, as_attachment=True) # send csv to user as a download
     else:
         raise Exception
+
+@bp.errorhandler(Exception)
+def query_error(e):
+    return render_template("error/query.html")

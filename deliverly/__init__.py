@@ -30,6 +30,10 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
+    @app.route('/admin')
+    def admin_menu():
+        return render_template("admin.html")
+
     @app.errorhandler(Exception)
     def unknown_error(e):
         print(traceback.format_exc())

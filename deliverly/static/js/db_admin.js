@@ -38,3 +38,23 @@ document.getElementById('insert_prod_data').addEventListener('click', () => {
         console.error('Error:', error);
     });
 });
+
+document.getElementById('insert_test_data').addEventListener('click', () => {
+    const output = document.getElementById("t_data_status");
+    output.innerText = "Status: Inserting data...";
+
+    fetch(Flask.url_for("database.test_data"), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        output.innerText = `Status: ${data.message}`;
+    })
+    .catch(error => {
+        output.innerText = "Status: Error inserting data.";
+        console.error('Error:', error);
+    });
+});

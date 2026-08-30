@@ -1,38 +1,24 @@
 {% extends 'base.html' %}
 
+{% block title %}Home{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}Home{% endblock %}</h1>
+    <h2 class="text-center text-white mb-3">Welcome to Deliverly, your easy to use database manager!</h2>
 {% endblock %}
 
 {% block content %}
-    <div class="justify-content-center">
-        <div class="table-responsive">
-            <table class="table table-striped text-center align-middle" style="table-layout: fixed; width: 100%;">
-                <thead>
-                    <tr>
-                        <th scope="col">Create blank database</th>
-                        <th scope="col">Insert production data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-primary" id="create_empty_tables">Action</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary" id="insert_prod_data">Action</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p id="init_status">Status: Press Action</p>
-                        </td>
-                        <td>
-                            <p id="p_data_status">Status: Press Action</p>
-                        </td>
-                    </tr>
-            </table>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h3 class="text-center mb-3">Please select an option</h3>
+            <div class="col-auto">
+                <p class="text-info text-center">There are more options in the navbar!</p>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('admin_menu') }}">Admin Menu</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('queries.query_menu') }}">Query Menu</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('forms.new_order_form') }}">New Order Form</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('forms.new_customer_form') }}">New Customer Form</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('forms.new_restaurant_form') }}">New Restaurant Form</a>
+            </div>
         </div>
+        <img src="{{ url_for('static', filename='icon.png') }}" alt="clipart of a delivery driver" class="rounded mx-auto d-block mt-5">
     </div>
-    <script src="{{ url_for('static', filename='js/db_admin.js') }}"></script>
 {% endblock %}

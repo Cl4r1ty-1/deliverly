@@ -8,3 +8,5 @@ instance/
 dist/
 build/
 *.tmp
+*.sh
+tree.txt

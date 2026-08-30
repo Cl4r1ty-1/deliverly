@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Admin{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="justify-content-center">
+        <p class="text-center text-danger">PLEASE ONLY DO EITHER 'Insert production data' OR 'Insert test data' AFTER CREATING BLANK TABLES, DO NOT DO BOTH.</p>
+        <p class="text-center text-danger">CREATE BLANK TABLES AGAIN WHEN YOU WISH TO SWITCH DATA</p>
+        <div class="table-responsive">
+            <table class="table table-striped text-center align-middle" style="table-layout: fixed; width: 100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">Create blank database</th>
+                        <th scope="col">Insert production data</th>
+                        <th scope="col">Insert test data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="create_empty_tables">Action</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="insert_prod_data">Action</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="insert_test_data">Action</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p id="init_status">Status: Press Action</p>
+                        </td>
+                        <td>
+                            <p id="p_data_status">Status: Press Action</p>
+                        </td>
+                        <td>
+                            <p id="t_data_status">Status: Press Action</p>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/db_admin.js') }}"></script>
+{% endblock %}

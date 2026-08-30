@@ -49,10 +49,10 @@ http://localhost:5000
 ├── .gitignore
 ├── LICENSE
 ├── README.md
-├── data.csv # raw data given
+├── data.csv
 ├── deliverly
 │   ├── __init__.py
-│   ├── data # normalised data
+│   ├── data
 │   │   ├── customer.csv
 │   │   ├── dish.csv
 │   │   ├── orders.csv
@@ -60,11 +60,12 @@ http://localhost:5000
 │   │   └── restaurant.csv
 │   ├── db.py
 │   ├── forms.py
-│   ├── normalise.py # script to normalise data.csv
+│   ├── normalise.py
 │   ├── queries.py
-│   ├── schema.sql # sql to initalise database
+│   ├── schema.sql
 │   ├── static
 │   │   ├── favicon.ico
+│   │   ├── icon.png
 │   │   ├── js
 │   │   │   ├── db_admin.js
 │   │   │   ├── form_validation.js
@@ -74,6 +75,7 @@ http://localhost:5000
 │   │       └── .gitignore
 │   ├── tables.py
 │   └── templates
+│       ├── admin.html
 │       ├── base.html
 │       ├── error
 │       │   ├── 404.html
@@ -95,9 +97,10 @@ http://localhost:5000
 │       │   ├── index.html
 │       │   └── table.html
 │       └── table.html
-└── requirements.txt
+├── requirements.txt
+└── update_layout.sh
 
-12 directories, 41 files
+12 directories, 44 files
 
 ```
 

@@ -23,13 +23,19 @@
                         <a class="nav-link{% if request.path == url_for('home') %} active{% endif %}" aria-current="page" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{% if request.path.startswith(url_for('tables.customers')) %} active{% endif %}" href="{{ url_for('tables.customers') }}">Customers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path.startswith(url_for('tables.restaurants')) %} active{% endif %}" href="{{ url_for('tables.restaurants') }}">Restaurants</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {% if request.path.startswith(url_for('queries.query_menu')) %} active{% endif %}" href="{{ url_for('queries.query_menu') }}">Queries</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="tableDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                            Tables (Raw Data)
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="tableDropdown">
+                            <li><a class="dropdown-item{% if request.path.startswith(url_for('tables.customer')) %} active{% endif %}" href="{{ url_for('tables.customer') }}">Customers</a></li>
+                            <li><a class="dropdown-item{% if request.path.startswith(url_for('tables.restaurant')) %} active{% endif %}" href="{{ url_for('tables.restaurant') }}">Restaurants</a></li>
+                            <li><a class="dropdown-item{% if request.path.startswith(url_for('tables.dish')) %} active{% endif %}" href="{{ url_for('tables.dish') }}">Dishs</a></li>
+                            <li><a class="dropdown-item{% if request.path.endswith(url_for('tables.orders')) %} active{% endif %}" href="{{ url_for('tables.orders') }}">Orders</a></li>
+                            <li><a class="dropdown-item{% if request.path.endswith(url_for('tables.ordersitems')) %} active{% endif %}" href="{{ url_for('tables.ordersitems') }}">Orders with Items</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="formDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">

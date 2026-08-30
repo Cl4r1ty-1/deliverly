@@ -1,7 +1,7 @@
 import sqlite3
 import csv
 from dateutil import parser
-from flask import current_app, g, jsonify, Blueprint
+from flask import current_app, g, jsonify, Blueprint, redirect, url_for, request
 import traceback
 from . import BASE_DIR
 
@@ -135,16 +135,26 @@ def test_data():
      print("Inserting data...")
      try:
         insert_test_data()
-        print("Data inserted")
+        print("Data inserted (TEST)")
         return jsonify({"status": "success", "message":"Test data entered successfully!"})
      except Exception as e:
           print(traceback.format_exc())
           return jsonify({"status": "fail", "message":str(e)})
 
 
-@bp.route('/delete/<table>/<id>')
+@bp.route('/delete/<table>/<id>', methods=["POST"])
 def delete_entry(table, id):
-     pass
+     # i couldn't use parameters with this query, but the function checks if table
+     # name is valid to prevent sql injection
+     VALID_TABLES = {'Customer', 'Restaurant', 'Dish', 'Orders', 'OrdersItems'}
+     if request.form.get("delete") == "delete" and table in VALID_TABLES:
+        db = get_db()
+        db.execute(f"DELETE FROM {table} WHERE {table}ID = ?", (id,))
+        db.commit()
+
+        return redirect(url_for(f"tables.{table.lower()}"))
+     else:
+        raise Exception
 
 # function for querying the db in the whole app
 def query_db(query, args=(), one=False):

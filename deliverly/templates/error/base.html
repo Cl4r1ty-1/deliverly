@@ -10,6 +10,13 @@
             <div class="alert alert-danger text-center">
                 <strong>{% block error_head %}{% endblock %}</strong> <a href="{% block error_url %}{% endblock %}" class="alert-link">{% block error_link %}{% endblock %}</a>and try again.
             </div>
+            {% if exception %}
+            <div class="alert alert-info">
+                <small><strong>Exception Details:</strong></small><br>
+                {% if exception_type %}<small><code>{{ exception_type }}:</code></small><br>{% endif %}
+                <small><code>{{ exception }}</code></small>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

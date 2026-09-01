@@ -38,11 +38,11 @@ def create_app(test_config=None):
     def unknown_error(e):
         print(traceback.format_exc())
 
-        return render_template('error/unknown.html')
+        return render_template('error/unknown.html', exception=str(e), exception_type=type(e).__name__)
 
     @app.errorhandler(404)
     def page_not_found(e):
-        return render_template('error/404.html')
+        return render_template('error/404.html', exception=str(e))
 
     from . import db, tables, queries, forms
     db.init_app(app)

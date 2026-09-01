@@ -145,11 +145,11 @@ def test_data():
 @bp.route('/delete/<table>/<id>', methods=["POST"])
 def delete_entry(table, id):
      # i couldn't use parameters with this query, but the function checks if table
-     # name is valid to prevent sql injection
+     # name is valid to prevent sql injection. it is secure i swear
      VALID_TABLES = {'Customer', 'Restaurant', 'Dish', 'Orders', 'OrdersItems'}
      if request.form.get("delete") == "delete" and table in VALID_TABLES:
         db = get_db()
-        db.execute(f"DELETE FROM {table} WHERE {table}ID = ?", (id,))
+        db.execute(f"DELETE FROM {table} WHERE {table.replace("s", "") if table.endswith('s') else table}ID = ?", (id,))
         db.commit()
 
         return redirect(url_for(f"tables.{table.lower()}"))

@@ -36,4 +36,4 @@ def ordersitems():
 
 @bp.errorhandler(OperationalError)
 def no_table(e):
-    return render_template('error/no_table.html')
+    return render_template('error/no_table.html', exception=str(e))

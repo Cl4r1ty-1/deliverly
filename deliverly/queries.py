@@ -188,4 +188,4 @@ def download_report(query):
 
 @bp.errorhandler(Exception)
 def query_error(e):
-    return render_template("error/query.html")
+    return render_template("error/query.html", exception=str(e))

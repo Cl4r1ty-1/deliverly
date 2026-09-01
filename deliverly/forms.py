@@ -116,4 +116,4 @@ def new_order_form():
 
 @bp.errorhandler(Exception)
 def form_error(e):
-    return render_template('error/form.html')
+    return render_template('error/form.html', exception=str(e))

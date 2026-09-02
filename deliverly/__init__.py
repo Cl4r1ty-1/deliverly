@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_jsglue import JSGlue
 from pathlib import Path
 import traceback

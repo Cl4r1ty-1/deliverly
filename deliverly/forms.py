@@ -2,11 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from deliverly.db import get_db, query_db
 from datetime import date
 
-bp = Blueprint('forms', __name__)
-
-@bp.route('/')
-def form_menu():
-    return render_template('forms/index.html')
+bp = Blueprint('forms', __name__, url_prefix='/forms')
 
 @bp.route('/submit/<form>')
 def success(form):

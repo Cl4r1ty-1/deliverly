@@ -4,23 +4,15 @@ from flask_jsglue import JSGlue
 from pathlib import Path
 import traceback
 
-def create_app(test_config=None):
+def create_app():
     global BASE_DIR
     # create the deliverly app
     jsglue = JSGlue()
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'records.db')
     )
     jsglue.init_app(app)
-
-    if test_config is None:
-        #prod config
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        #test config
-        app.config.from_mapping(test_config)
 
     os.makedirs(app.instance_path, exist_ok=True)
 
@@ -48,6 +40,6 @@ def create_app(test_config=None):
     db.init_app(app)
     app.register_blueprint(tables.bp)
     app.register_blueprint(queries.bp, url_prefix='/queries')
-    app.register_blueprint(forms.bp, url_prefix='/forms')
+    app.register_blueprint(forms.bp)
 
     return app

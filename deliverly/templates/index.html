@@ -19,6 +19,15 @@
                 <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('forms.new_restaurant_form') }}">New Restaurant Form</a>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <p class="text-center text-light">Tables (view and edit):</p>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('tables.customer') }}">Customers table</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('tables.restaurant') }}">Restaurants table</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('tables.orders') }}">Orders table</a>
+                <a type="button" class="btn btn-secondary mb-3" href="{{ url_for('tables.ordersitems') }}">Orders Items table</a>
+            </div>
+        </div>
         <img src="{{ url_for('static', filename='icon.png') }}" alt="clipart of a delivery driver" class="rounded mx-auto d-block mt-5">
     </div>
 {% endblock %}

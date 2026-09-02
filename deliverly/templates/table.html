@@ -2,6 +2,10 @@
 
 {% block header %}
     <h1>{% block title %}Database viewer{% endblock %}</h1>
+    <h3 class="text-secondary">{{ table }} table</h3>
+    {% if table == 'OrdersItems' %}
+    <p class="text-warning">You cannot edit this table, please make a new order and delete previous order from orders table if required</p>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -11,8 +15,10 @@
             {% for c in columns %}
                 <th scope="col">{{c}}</th>
             {% endfor %}
+                {% if table != 'OrdersItems' %}
                 <th scope="col">Delete</th>
                 <th scope="col">Edit</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -21,6 +27,7 @@
                 {% for col in row %}
                 <td>{{col}}</td>
                 {% endfor %}
+                {% if table != 'OrdersItems' %}
                 <td>
                         <form class="col" action="{{ url_for('database.delete_entry', table=table, id=row[0]) }}" name="form" method="post">
                             <button class="btn btn-primary" name="delete" value="delete">Delete</button>
@@ -29,6 +36,7 @@
                 <td>
                     <a class="btn btn-primary" href="{{ url_for('forms.edit_entry', table=table, id=row[0]) }}">Edit</a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

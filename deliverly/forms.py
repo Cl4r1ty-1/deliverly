@@ -136,6 +136,6 @@ def edit_entry(table, id):
     else:
         raise Exception("Not a valid table!")
 
-# @bp.errorhandler(Exception)
-# def form_error(e):
-#     return render_template('error/form.html', exception=str(e))
+@bp.errorhandler(Exception)
+def form_error(e):
+    return render_template('error/form.html', exception=str(e))

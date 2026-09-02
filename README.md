@@ -87,6 +87,7 @@ http://localhost:5000
 │       ├── forms
 │       │   ├── customer.html
 │       │   ├── dish.html
+│       │   ├── edit.html
 │       │   ├── order.html
 │       │   ├── restaurant.html
 │       │   └── submit.html
@@ -97,8 +98,7 @@ http://localhost:5000
 │       │   ├── index.html
 │       │   └── table.html
 │       └── table.html
-├── requirements.txt
-└── update_layout.sh
+└── requirements.txt
 
 12 directories, 44 files
 

@@ -114,6 +114,28 @@ def new_order_form():
 
     return redirect(url_for('forms.success', form='order'))    
 
-@bp.errorhandler(Exception)
-def form_error(e):
-    return render_template('error/form.html', exception=str(e))
+@bp.route('/edit_entry/<table>/<id>', methods=["GET", "POST"])
+def edit_entry(table, id):
+    VALID_TABLES = {'Customer', 'Restaurant', 'Dish', 'Orders'}
+    if table in VALID_TABLES:
+        row_id = table.replace("s", "") if table.endswith('s') else table
+        headers, data = query_db(f"SELECT * FROM {table} WHERE {row_id}ID = ?", (id,))
+    
+        if request.method == "GET":
+                return render_template("forms/edit.html", headers=headers, data=data, table=table, id=id)
+
+        for _ in range(len(headers)):
+            if _ != 0:
+                new_value = request.form.get(headers[_], None)
+                if new_value != str(data[0][_]):
+                    db = get_db()
+                    db.execute(f"UPDATE {table} SET {headers[_]} = '{new_value}' WHERE {row_id}ID = ?", (id,))
+                    db.commit()
+
+        return redirect(url_for("forms.success", form='edit'))
+    else:
+        raise Exception("Not a valid table!")
+
+# @bp.errorhandler(Exception)
+# def form_error(e):
+#     return render_template('error/form.html', exception=str(e))

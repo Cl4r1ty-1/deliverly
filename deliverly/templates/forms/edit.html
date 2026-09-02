@@ -1,4 +1,4 @@
-{% extends 'base.html %'}
+{% extends 'base.html' %}
 
 {% block header %}
     <h1>{% block title %}Edit {{ table }} entry{% endblock %}</h1>
@@ -7,9 +7,44 @@
 {% block content %}
     <div class="container d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-6 col-lg-4">
-            <form>
-                <input>
+            <form id="edit_form" class="p-4 needs-validation" action="{{ url_for('forms.edit_entry', table=table, id=id) }}" method="post" novalidate>
+                <div class="row mb-3">
+                    <label for="staticID" class="col-sm-5 col-form-label">{{ table }} ID</label>
+                    <div class="col-sm-2">
+                        <input type="text" readonly="" class="form-control-plaintext" id="staticID" value="{{ data[0][0] }}">
+                    </div>
+                </div>
+                {% for header in headers %}
+                {% if loop.index0 != 0 %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ header }}">{{ header }}</label>
+                        <input class="form-control"
+                               id="{{ header}}" 
+                               {% if 'Email' in header %}
+                               type="email"
+                               {% elif 'Phone' in header %}
+                               type="tel"
+                               pattern="\([0-9]{2}\) [0-9]{8}"
+                               {% elif header == 'PostCode' %}
+                               type="text"
+                               pattern="[0-9]{4}"
+                               {% elif header == 'DishPrice' or header == 'Quantity' %}
+                               type="number"
+                               min="{{ 1 if header == 'Quantity' else 0.01}}"
+                               {% else %}
+                               type="text"
+                               {% endif %}
+                               name="{{ header }}" 
+                               value="{{ data[0][loop.index0] }}" 
+                               required>
+                    </div>
+                {% endif %}
+                {% endfor %}
+                <div class="d-flex mb-3 justify-content-center">
+                    <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+                </div>
             </form>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/form_validation.js') }}"></script>
 {% endblock %}

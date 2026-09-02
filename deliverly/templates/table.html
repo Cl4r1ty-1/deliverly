@@ -11,7 +11,8 @@
             {% for c in columns %}
                 <th scope="col">{{c}}</th>
             {% endfor %}
-                <th scope="col">Delete Entry</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +22,12 @@
                 <td>{{col}}</td>
                 {% endfor %}
                 <td>
-                    <form action="{{ url_for('database.delete_entry', table=table, id=row[0]) }}" name="form" method="post">
-                        <button class="btn btn-primary" name="delete" value="delete">Delete</button>
-                    </form>
+                        <form class="col" action="{{ url_for('database.delete_entry', table=table, id=row[0]) }}" name="form" method="post">
+                            <button class="btn btn-primary" name="delete" value="delete">Delete</button>
+                        </form>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{ url_for('forms.edit_entry', table=table, id=row[0]) }}">Edit</a>
                 </td>
             </tr>
             {% endfor %}

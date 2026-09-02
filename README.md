@@ -49,16 +49,16 @@ http://localhost:5000
 ├── .gitignore
 ├── LICENSE
 ├── README.md
-├── data.csv
+├── data.csv # original data we were provided
 ├── deliverly
 │   ├── __init__.py
-│   ├── data
+│   ├── data # normalised data ready for database
 │   │   ├── customer.csv
 │   │   ├── dish.csv
 │   │   ├── orders.csv
 │   │   ├── ordersitems.csv
 │   │   └── restaurant.csv
-│   ├── db.py
+│   ├── db.py # where you will find code to connect to and initalise database, including importing data
 │   ├── forms.py
 │   ├── normalise.py
 │   ├── queries.py

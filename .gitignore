@@ -10,3 +10,4 @@ build/
 *.tmp
 *.sh
 tree.txt
+*.zip
